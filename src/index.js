@@ -4,6 +4,7 @@ import L from "leaflet";
 import { addTileLayer, validateIp } from "./helpers";
 import icon from "../images/icon-location.svg";
 
+//во внешний код(модули) можно вынести все, что не использует глобальные переменные
 const ipInput = document.querySelector(".search-bar__input");
 const btn = document.querySelector(".search-bar__btn");
 
@@ -22,7 +23,6 @@ const map = L.map(mapArea, {
 const markerIcon = L.icon({
   iconUrl: icon,
   iconSize: [30, 40],
-  //   iconAnchor: [22, 94],
 });
 
 // вывел логику получения карты в отдельню функцию
@@ -37,7 +37,7 @@ function getData() {
   // проверка данных
   if (validateIp(ipInput.value)) {
     fetch(
-      `https://geo.ipify.org/api/v2/country?apiKey=at_ZwQDQmmmU8nujDzeu0Zj3ZLvWwWJY&ipAddress=${ipInput.value}`
+      `https://geo.ipify.org/api/v2/country,city?apiKey=at_ZwQDQmmmU8nujDzeu0Zj3ZLvWwWJY&ipAddress=${ipInput.value}`
     )
       .then((response) => response.json())
       .then((data) => setInfo(data));
@@ -51,8 +51,13 @@ function handleKey(e) {
 }
 
 function setInfo(mapData) {
+  const { lat, lng, country, region, timezone } = mapData.location;
+
   ipInfo.innerText = mapData.ip;
-  locationInfo.innerText = `${mapData.location.country} ${mapData.location.region}`;
-  timeZoneInfo.innerText = mapData.location.timezone;
+  locationInfo.innerText = `${country} ${region}`;
+  timeZoneInfo.innerText = timezone;
   ispInfo.innerText = mapData.isp;
+
+  map.setView([lat, lng]);
+  L.marker([lat, lng], { icon: markerIcon }).addTo(map);
 }
