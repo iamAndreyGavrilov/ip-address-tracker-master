@@ -54,7 +54,21 @@
   position: relative;
   cursor: pointer;
 }
+
+.search-bar__btn2 {
+  background-color: black;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 0 1.5rem;
+  border-radius: 0 10px 10px 0;
+  position: relative;
+  cursor: pointer;
+}
 .search-bar__btn:hover {
+  background-color: rgb(77, 77, 77);
+}
+.search-bar__btn2:hover {
   background-color: rgb(77, 77, 77);
 }
 .search-bar__btn::after {
