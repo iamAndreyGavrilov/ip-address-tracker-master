@@ -1,7 +1,7 @@
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 //работаем через фасады
-import { addTileLayer, validateIp } from "./helpers";
+import { validateIp, addTileLayer, getAddress } from "./helpers";
 import icon from "../images/icon-location.svg";
 
 //во внешний код(модули) можно вынести все, что не использует глобальные переменные
@@ -36,11 +36,7 @@ ipInput.addEventListener("keydown", handleKey);
 function getData() {
   // проверка данных
   if (validateIp(ipInput.value)) {
-    fetch(
-      `https://geo.ipify.org/api/v2/country,city?apiKey=at_ZwQDQmmmU8nujDzeu0Zj3ZLvWwWJY&ipAddress=${ipInput.value}`
-    )
-      .then((response) => response.json())
-      .then((data) => setInfo(data));
+    getAddress(ipInput.value).then((data) => setInfo(data));
   }
 }
 
