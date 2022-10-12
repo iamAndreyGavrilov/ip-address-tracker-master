@@ -2,7 +2,7 @@ import "babel-polyfill";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 //работаем через фасады
-import { validateIp, addTileLayer, getAddress } from "./helpers";
+import { validateIp, addTileLayer, getAddress, addOffset } from "./helpers";
 import icon from "../images/icon-location.svg";
 
 //во внешний код(модули) можно вынести все, что не использует глобальные переменные
@@ -57,4 +57,13 @@ function setInfo(mapData) {
 
   map.setView([lat, lng]);
   L.marker([lat, lng], { icon: markerIcon }).addTo(map);
+
+  // matchMedia - определяет ширну экрана устройства
+  if (window.matchMedia("(max-width: 1023px)").matches) {
+    addOffset(map);
+  }
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+  getAddress("168.63.129.16").then(setInfo);
+});

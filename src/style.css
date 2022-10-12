@@ -27,6 +27,13 @@
   font-size: 3rem;
 }
 
+.finder__span {
+  color: white;
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+  font-size: 1.5rem;
+}
+
 .search-bar {
   display: flex;
   justify-content: center;
